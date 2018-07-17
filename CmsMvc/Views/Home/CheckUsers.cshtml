@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CmsMvc.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "CheckUsers";
+}
+
+<h2>CheckUsers</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailConfirmed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Roles)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailConfirmed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @if (item.Roles.Count > 0)
+                {
+                    <div>Admin</div>
+                }
+            </td>
+            <td>
+                @if (User.Identity.Name == "Admin@Admin.com")
+                {
+                    <div>@Html.ActionLink("Give Admin Rights", "AddAdmin", new { id = item.Id }), @Html.ActionLink("Remove Admin Rights", "RemoveAdmin", new { id = item.Id })</div>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
