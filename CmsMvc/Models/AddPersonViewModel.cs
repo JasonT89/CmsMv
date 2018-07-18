@@ -25,10 +25,7 @@ namespace CmsMvc.Models
             FirstName = person.FirstName;
             LastName = person.LastName;
             Email = person.Email;
-
-            CountryId = person.CountryId;
-            Country = person.Country;
-
+           
             CityId = person.CityId;
             City = person.City;
 

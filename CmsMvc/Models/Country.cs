@@ -10,6 +10,7 @@ namespace CmsMvc.Models
         public int CountryId { get; set; }
         public string CountryName { get; set; }
         public int Population { get; set; }
+
         public List<City> Cities { get; set; }
     }
 }

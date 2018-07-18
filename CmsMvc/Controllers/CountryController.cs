@@ -134,5 +134,15 @@ namespace CmsMvc.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(int id)
+        {
+            var removeCont = db.Countries.First(x => x.CountryId == id);
+            db.Countries.Remove(removeCont);
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -17,8 +17,7 @@ namespace CmsMvc.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            var model = db.People.Include("Country")
-                                  .Include("City")
+            var model = db.People.Include("City")
                                   .ToList();
             return View(model);
         }
@@ -27,20 +26,17 @@ namespace CmsMvc.Controllers
         {
             var model = new Person();
             var model2 = db.Countries.Include("Cities").ToList();
-            //var model3 = _db.Cities.ToList();
-
+           
             var viewModel = new AddPersonViewModel(model, model2);
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Create(Person person, int CountryId, int CityId)
+        public ActionResult Create(Person person, int CityId)
         {
             person.CityId = CityId;
             person.City = db.Cities.First(x => x.CityId == CityId);
-            person.CountryId = CountryId;
-            person.Country = db.Countries.First(x => x.CountryId == CountryId);
-
+            
             db.People.Add(person);
 
             db.SaveChanges();
@@ -50,7 +46,7 @@ namespace CmsMvc.Controllers
 
         public ActionResult Edit(int id)
         {
-            var model = db.People.Include("City").Include("Country").First(x => x.PersonId == id);
+            var model = db.People.Include("City").First(x => x.PersonId == id);
             var model2 = db.Countries.Include("Cities").ToList();
 
             var viewModel = new AddPersonViewModel(model, model2);
@@ -58,10 +54,9 @@ namespace CmsMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Person person, int CountryId, int CityId)
+        public ActionResult Edit(Person person, int CityId)
         {
-            var model = db.People.Include("City")
-                                  .Include("Country")
+            var model = db.People.Include("City")                                  
                                   .First(x => x.PersonId == person.PersonId);
             model.FirstName = person.FirstName;
             model.LastName = person.LastName;
@@ -69,9 +64,6 @@ namespace CmsMvc.Controllers
 
             model.CityId = CityId;
             model.City = db.Cities.First(x => x.CityId == CityId);
-
-            model.CountryId = CountryId;
-            model.Country = db.Countries.First(x => x.CountryId == CountryId);
 
             db.SaveChanges();
 

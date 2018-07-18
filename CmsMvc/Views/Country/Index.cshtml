@@ -42,10 +42,13 @@
                 <div>@Html.ActionLink("New City", "AddCity", new { CountryId = item.CountryId })</div>
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CountryId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.CountryId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.CountryId })
-            </td>
+                @if (User.IsInRole("Admin"))
+                {
+                <div>@Html.ActionLink("Edit", "Edit", new { id = item.CountryId }) @Html.ActionLink("Delete", "Delete", new { id = item.CountryId })</div>
+                } 
+                
+
+                </td>
         </tr>
     }
 
